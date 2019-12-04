@@ -23,8 +23,26 @@ body, html{
     background-size: cover;
 }
 
+body.black{
+    /*background: linear-gradient(#00000050, #00000057, #00000070), url(Images/box.jpg);
+    background-size: cover;*/
+    background: #100c0c;
+}
+
 .bgHiglight{
-    background: #ffffff9e;
+    /*background: #ffffff9e;*/
+    background: aliceblue;
+}
+
+.settingsPage{
+    position: absolute;
+    background: white;
+    width: 100%;
+    z-index: 999;
+    height: 100vh;
+    left: -105vw;
+    top: 0;
+    transition: background-color 1000ms linear;
 }
 
 #splash{
