@@ -62,9 +62,31 @@ function onBackKeyDown() {
     window.location.href = "home.html?nosplash";
 }
 
+function switchTheme(dark){
+    localStorage.setItem("flashThemeDark", dark);
+        if(dark == 1){
+            $("body, .modal-content, .optionsHolder").css({
+                "background":"#100c0c",
+                "color":"white"
+            })
+            $(".playButton, .clearQuestion, .instruct").addClass("white");
+            
+            $(".settingsPage").css("background","black");
+            $(".scoreLabel, #number, .record, .settings").addClass("white");
+        }else{
+            $("body, #cardHolderOutside, .settingsPage, .modal-content, .optionsHolder").removeAttr("style");
+            $(".playButton, .scoreLabel, #number, .record, .settings, .clearQuestion, .instruct").removeClass("white");
+        }
+}
+
 $(document).ready(function () {
     document.addEventListener("backbutton", onBackKeyDown, false);
     document.addEventListener("pause", onPause, false);
+    var dark = localStorage.getItem("flashThemeDark");
+    if(dark == "true"){
+        $("#checkTheme").prop('checked', true);
+        switchTheme(true);
+    }
     //testAnim("body", "slideInRight faster");
     //sound effect
     //var arcUp = $(".arcUp").outerHeight(true);
@@ -87,19 +109,7 @@ $(document).ready(function () {
     
     $("#checkTheme").on("change", function(){
         var dark = $("#checkTheme").is(":checked");
-        if(dark == 1){
-            $("body, .modal-content").css({
-                "background":"black",
-                "color":"white"
-            })
-            $(".playButton").addClass("white");
-            
-            $(".settingsPage").css("background","black");
-            $(".scoreLabel, #number, .record, .settings").addClass("white");
-        }else{
-            $("body, #cardHolderOutside, .settingsPage, .modal-content").removeAttr("style");
-            $(".playButton, .scoreLabel, #number, .record, .settings").removeClass("white");
-        }
+        switchTheme(dark);
     })
     
     if (localStorage.getItem("sound") == null) {
@@ -267,6 +277,79 @@ function testAnim(e,x) {
   };
 
 function getCards(streak){
+    //clear timer
+    clearTimeout(closeTheCards);
+        //$(".cardHolder").removeClass("open");
+    $(".progress-bar").css("width", "0%");
+    clearInterval(tm);
+    if(sound == 1){
+        var audio = $('audio').get(2);
+        audio.play();
+    }
+    $("#timer").text("0");
+    
+    /*if(tm != null){
+        clearInterval(tm);
+        $("#timer").text("0");
+       }*/
+      
+    $(".cardHolder").empty();
+    $(".instruct").show();
+    //$(".cardHolder").animate({left: 0 + "%"},1000);
+    var number = parseInt($("#number").text());
+    var maxWidth = 150;
+    var top = 4;
+    var zindex = 0;
+    question = [];
+    for(var i = 1; i <= number; i++){
+        zindex = number - i;
+        var card = $("<div class='flipCard'></div");
+        var spanSign = $("<span class='cardSignSpan'></span");
+        var width = ($("#cardHolderOutside").width() - (2 * number)) / number;
+        var showWidth = (width/$("#cardHolderOutside").width()) * 100;
+        var font = width/2 > 60 ? 60 : width/2;
+        //var width = ($(window).width() * 0.90) / number;
+
+        //var width = 90 / number;
+        var topDim = (top * (number - i)) - 4;
+        //var width = (maxWidth - (i * 10)) + 10;
+        //var margin = (maxWidth-width)/2;
+        if(i == 1){
+            var randNum = randomNumbers();
+            var span = $("<span class='cardSpan'></span");
+            $(span).text(randNum);
+            question.push(randNum);
+            spanSign = null;
+        }else{
+            var randNum = randomNumbers();
+            var randSign = randomSign();
+            var span = $("<span class='cardSpan'></span");
+            $(spanSign).text(randSign);
+            $(card).append(spanSign);
+            $(span).text(randNum);
+            question.push(randSign);
+            question.push(randNum);
+            
+        }
+        
+        $(card).append(span);
+        
+        if(window.innerWidth > window.innerHeight){
+            //landscape
+            font *= 0.6;
+        }
+        
+        //$(card).css({"width": width + "px", "margin-left": margin + "px", "top": top + "px", "z-index" : zindex});
+        $(card).css({"top": topDim + "px", "z-index" : zindex, "width" : showWidth + "%", "font-size" : font + "px", "background-color" : blueColor[i]});
+        $(".cardHolder").append(card);
+    }
+    calculate();
+    $(".clearQuestion").text(question.join(" ") + " =");
+    $(".clearQuestion").show();
+    $(".clearQuestion").css("opacity","1");
+}
+
+function getCards2(streak){
     //clear timer
     clearTimeout(closeTheCards);
         //$(".cardHolder").removeClass("open");
