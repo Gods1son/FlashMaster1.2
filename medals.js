@@ -8,6 +8,20 @@ function onBackKeyDown() {
     window.location.href = "home.html?nosplash";
 }
 
+function switchTheme(dark){
+    localStorage.setItem("flashThemeDark", dark);
+        if(dark == 1){
+            /*$("body, .bgHiglight").css({
+                "background":"black",
+                "color":"white"
+            })*/
+            $("body").addClass("black");
+        }else{
+            //$("body, .bgHiglight").removeAttr("style");
+            $("body").removeClass("black");
+        }
+}
+
 $(document).ready(function () {
    document.addEventListener("backbutton", onBackKeyDown, false);
     	//get bestScore
@@ -18,6 +32,12 @@ $(document).ready(function () {
 	}
 	$("#bestScore").text(bestScore);
 	//end of best score
+    
+    var dark = localStorage.getItem("flashThemeDark");
+    if(dark == "true"){
+        $("#checkTheme").prop('checked', true);
+        switchTheme(true);
+    }
     
     //otherAwards
     	
