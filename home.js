@@ -33,6 +33,20 @@ function onBackKeyDown() {
     window.plugins.appMinimize.minimize();
 }
 
+function switchTheme(dark){
+    localStorage.setItem("flashThemeDark", dark);
+        if(dark == 1){
+            /*$("body, .bgHiglight").css({
+                "background":"black",
+                "color":"white"
+            })*/
+            $("body").addClass("black");
+        }else{
+            //$("body, .bgHiglight").removeAttr("style");
+            $("body").removeClass("black");
+        }
+}
+
 $(document).ready(function () {
     document.addEventListener("backbutton", onBackKeyDown, false);
     if(window.location.href.indexOf("nosplash") == -1){
@@ -51,6 +65,11 @@ $(document).ready(function () {
     //resize button
     //var long = $(".chooseType").eq(2).outerWidth() + 20;
     //$(".chooseType").css("width", long + "px")
+    var dark = localStorage.getItem("flashThemeDark");
+    if(dark == "true"){
+        $("#checkTheme").prop('checked', true);
+        switchTheme(true);
+    }
     
     //get bestScore
     if(localStorage.getItem("bestScore") == null){
