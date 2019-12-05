@@ -336,10 +336,9 @@ button:focus {
     border-radius: 5px;
     color: white;
     width: 100%;
-    margin-top: 25px;
+    margin-top: 15px;
     background: #192efa;  /*#1035ff;*/;
     font-size: 4vh;
-    letter-spacing: 1.5px;
     border:none;
 }
 
