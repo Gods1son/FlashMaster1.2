@@ -409,10 +409,10 @@ a:focus
     border-top-left-radius: 35%;*/
     border-bottom: 5px ridge #B52952; /*#1035ff;*/
     border-top: 5px ridge #B52952;
-    border-top-left-radius: 15%;
-    border-top-right-radius: 15%;
-    border-bottom-left-radius: 15%;
-    border-bottom-right-radius: 15%;
+    border-top-left-radius: 10%;
+    border-top-right-radius: 10%;
+    /*border-bottom-left-radius: 15%;
+    border-bottom-right-radius: 15%;*/
 }
 
 .answers{
