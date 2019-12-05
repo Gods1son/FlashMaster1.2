@@ -539,6 +539,7 @@ var maxScore = 5;
 var maxAttainable = 0;
 
 function findAnswer(but){
+    $(but).off("click");
 	var showNow = true;
 	var messages = 0;
 	$("#winnerMessage").text("");
@@ -670,7 +671,7 @@ function findAnswer(but){
     }else{
         //failed answer
         $(but).animate({"opacity":0}, 500);
-        $(but).off("click");
+        //$(but).off("click");
         trial += 1;
         var x = document.getElementById("wrongSound");
         if(sound == 1) {x.play();}
